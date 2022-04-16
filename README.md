@@ -1,6 +1,8 @@
 # go-optional 
 
-[![Software License](https://img.shields.io/github/license/mikkael131/go-optional)](LICENSE)
+[![Software License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+![Go version](https://img.shields.io/github/go-mod/go-version/mikkael131/go-optional)
+[![Release](https://img.shields.io/github/release/mikkael131/go-optional.svg)](https://github.com/mikkael131/go-optional/releases/latest)
 [![Go Report Card](https://goreportcard.com/badge/github.com/mikkael131/go-optional)](https://goreportcard.com/report/github.com/mikkael131/go-optional)
 [![codecov](https://codecov.io/gh/mikkael131/go-optional/branch/main/graph/badge.svg?token=UUSWVIW16A)](https://codecov.io/gh/mikkael131/go-optional)
 [![Github workflow](https://github.com/mikkael131/go-optional/actions/workflows/go.yml/badge.svg?branch=main)](https://github.com/mikkael131/go-optional/actions/workflows/go.yml)
