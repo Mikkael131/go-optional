@@ -1,6 +1,6 @@
 # go-optional 
 
-[![Software License](https://img.shields.io/github/license/mikkael131/go-optional)](LICENSE.md)
+[![Software License](https://img.shields.io/github/license/mikkael131/go-optional)](LICENSE)
 [![Go Report Card](https://goreportcard.com/badge/github.com/mikkael131/go-optional)](https://goreportcard.com/report/github.com/mikkael131/go-optional)
 [![codecov](https://codecov.io/gh/mikkael131/go-optional/branch/main/graph/badge.svg?token=UUSWVIW16A)](https://codecov.io/gh/mikkael131/go-optional)
 [![Github workflow](https://github.com/mikkael131/go-optional/actions/workflows/go.yml/badge.svg?branch=main)](https://github.com/mikkael131/go-optional/actions/workflows/go.yml)
