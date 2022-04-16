@@ -1,6 +1,12 @@
 package optional
 
-import "fmt"
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+)
+
+var null = []byte("null")
 
 type Optional[T any] struct {
 	value   T
@@ -80,4 +86,39 @@ func (o Optional[T]) String() string {
 		return fmt.Sprintf("Optional[%v]", o.value)
 	}
 	return "Optional[empty]"
+}
+
+func (o Optional[T]) Ptr() *Optional[T] {
+	if o.IsPresent() {
+		return &o
+	}
+	return nil
+}
+
+func (o *Optional[T]) Val() Optional[T] {
+	if o == nil {
+		return Empty[T]()
+	}
+	return *o
+}
+
+func (o Optional[T]) MarshalJSON() ([]byte, error) {
+	value, ok := o.Get()
+	if !ok {
+		return null, nil
+	}
+	return json.Marshal(value)
+}
+
+func (o *Optional[T]) UnmarshalJSON(b []byte) error {
+	if bytes.Compare(b, null) == 0 {
+		return nil
+	}
+
+	var value T
+	if err := json.Unmarshal(b, &value); err != nil {
+		return err
+	}
+	*o = Of(value)
+	return nil
 }

@@ -156,3 +156,60 @@ func Benchmark_FlatMap_Empty(b *testing.B) {
 		})
 	}
 }
+
+func Benchmark_Ptr_Present(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		_ = Of("some string").Ptr()
+	}
+}
+
+func Benchmark_Ptr_Empty(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		_ = Empty[string]().Ptr()
+	}
+}
+
+func Benchmark_Val_Present(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		_ = ptr(Of("some string")).Val()
+	}
+}
+
+func Benchmark_Val_Empty(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		_ = ptr(Empty[string]()).Val()
+	}
+}
+
+func Benchmark_MarshalJSON_Present(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		_, _ = Of("some string").MarshalJSON()
+	}
+}
+
+func Benchmark_MarshalJSON_Empty(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		_, _ = Empty[string]().MarshalJSON()
+	}
+}
+
+func Benchmark_UnmarshalJSON_String(b *testing.B) {
+	bytes := []byte("some string")
+	for n := 0; n < b.N; n++ {
+		_ = (&Optional[string]{}).UnmarshalJSON(bytes)
+	}
+}
+
+func Benchmark_UnmarshalJSON_EmptyString(b *testing.B) {
+	bytes := []byte("")
+	for n := 0; n < b.N; n++ {
+		_ = (&Optional[string]{}).UnmarshalJSON(bytes)
+	}
+}
+
+func Benchmark_UnmarshalJSON_NullString(b *testing.B) {
+	bytes := []byte("null")
+	for n := 0; n < b.N; n++ {
+		_ = (&Optional[string]{}).UnmarshalJSON(bytes)
+	}
+}

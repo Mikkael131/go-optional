@@ -39,6 +39,15 @@ Benchmark_Map_Present-20                1000000000               3.682 ns/op    
 Benchmark_Map_Empty-20                  1000000000               1.839 ns/op           0 B/op          0 allocs/op
 Benchmark_FlatMap_Present-20            1000000000               3.605 ns/op           0 B/op          0 allocs/op
 Benchmark_FlatMap_Empty-20              1000000000               1.640 ns/op           0 B/op          0 allocs/op
+Benchmark_Ptr_Present-20                1000000000               0.2131 ns/op          0 B/op          0 allocs/op
+Benchmark_Ptr_Empty-20                  1000000000               0.2116 ns/op          0 B/op          0 allocs/op
+Benchmark_Val_Present-20                1000000000               0.1084 ns/op          0 B/op          0 allocs/op
+Benchmark_Val_Empty-20                  1000000000               0.1073 ns/op          0 B/op          0 allocs/op
+Benchmark_MarshalJSON_Present-20        293041226               81.93 ns/op           32 B/op          2 allocs/op
+Benchmark_MarshalJSON_Empty-20          1000000000               1.065 ns/op           0 B/op          0 allocs/op
+Benchmark_UnmarshalJSON_String-20       136965816              174.8 ns/op           264 B/op          7 allocs/op
+Benchmark_UnmarshalJSON_EmptyString-20  357841622               66.38 ns/op          184 B/op          3 allocs/op
+Benchmark_UnmarshalJSON_NullString-20   1000000000               2.721 ns/op           0 B/op          0 allocs/op
 ```
 
 compared with similar packages:
