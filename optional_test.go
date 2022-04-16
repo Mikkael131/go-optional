@@ -179,6 +179,30 @@ func TestOptional_ElseErr(t *testing.T) {
 	}
 }
 
+func TestOptional_ElseZero(t *testing.T) {
+	tests := map[string]struct {
+		optional Optional[string]
+		want     string
+	}{
+		"zero of empty optional": {
+			optional: Empty[string](),
+			want:     "",
+		},
+		"value of present optional": {
+			optional: Of("some string"),
+			want:     "some string",
+		},
+	}
+	for name, tt := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := tt.optional.ElseZero()
+			if got != tt.want {
+				t.Errorf("ElseZero() got = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
 func TestOptional_Filter(t *testing.T) {
 	tests := map[string]struct {
 		optional   Optional[string]

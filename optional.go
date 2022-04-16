@@ -42,6 +42,14 @@ func (o Optional[T]) ElseErr(err error) (T, error) {
 	return o.value, err
 }
 
+func (o Optional[T]) ElseZero() T {
+	if o.IsPresent() {
+		return o.value
+	}
+	var zero T
+	return zero
+}
+
 func (o Optional[T]) Filter(f func(v T) bool) Optional[T] {
 	if o.IsPresent() && f(o.value) {
 		return o
