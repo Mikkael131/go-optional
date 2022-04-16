@@ -145,6 +145,10 @@ func TestOfGoEmptyPtr(t *testing.T) {
 		value *string
 		want  Optional[string]
 	}{
+		"nil": {
+			value: nil,
+			want:  Optional[string]{},
+		},
 		"empty string": {
 			value: &emptyStr,
 			want:  Optional[string]{},
