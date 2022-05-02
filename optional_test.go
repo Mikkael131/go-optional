@@ -393,7 +393,7 @@ func TestOptional_Val(t *testing.T) {
 	}
 }
 
-func TestOptional_String(t *testing.T) {
+func TestOptional_String_WithString(t *testing.T) {
 	tests := map[string]struct {
 		optional Optional[string]
 		want     string
@@ -405,6 +405,31 @@ func TestOptional_String(t *testing.T) {
 		"present optional": {
 			optional: Of("some string"),
 			want:     "Optional[some string]",
+		},
+	}
+	for name, tt := range tests {
+		t.Run(name, func(t *testing.T) {
+			if got := tt.optional.String(); got != tt.want {
+				t.Errorf("String() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestOptional_String_WithStruct(t *testing.T) {
+	tests := map[string]struct {
+		optional Optional[stringerStruct[string]]
+		want     string
+	}{
+		"empty optional": {
+			optional: Empty[stringerStruct[string]](),
+			want:     "Optional[empty]",
+		},
+		"present optional": {
+			optional: Of(stringerStruct[string]{
+				V: "some string",
+			}),
+			want: `Optional[custom string formatting - "V":"some string"]`,
 		},
 	}
 	for name, tt := range tests {
@@ -909,6 +934,14 @@ func TestOptional_UnmarshalJSON_StructWithPtr_Float64(t *testing.T) {
 			}
 		})
 	}
+}
+
+type stringerStruct[T any] struct {
+	V T
+}
+
+func (s stringerStruct[T]) String() string {
+	return `custom string formatting - "V":"` + fmt.Sprintf("%v", s.V) + `"`
 }
 
 type valueStruct[T any] struct {
