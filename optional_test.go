@@ -237,12 +237,12 @@ func TestOptional_Filter(t *testing.T) {
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
 			called := false
-			argWrapper := func(v string) bool {
+			fnWrapper := func(v string) bool {
 				called = true
 				return tt.arg(v)
 			}
 
-			got := tt.optional.Filter(argWrapper)
+			got := tt.optional.Filter(fnWrapper)
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Filter() = %v, want %v", got, tt.want)
 			}
@@ -286,12 +286,12 @@ func TestOptional_Map(t *testing.T) {
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
 			called := false
-			argWrapper := func(v string) (string, bool) {
+			fnWrapper := func(v string) (string, bool) {
 				called = true
 				return tt.arg(v)
 			}
 
-			got := tt.optional.Map(argWrapper)
+			got := tt.optional.Map(fnWrapper)
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Map() = %v, want %v", got, tt.want)
 			}
@@ -315,7 +315,7 @@ func TestOptional_FlatMap(t *testing.T) {
 			want:       Empty[string](),
 			wantCalled: false,
 		},
-		"flat map present optional": {
+		"flat map with returned present optional": {
 			optional: Of("some string"),
 			arg: func(v string) Optional[string] {
 				return Of("other string")
@@ -323,16 +323,24 @@ func TestOptional_FlatMap(t *testing.T) {
 			want:       Of("other string"),
 			wantCalled: true,
 		},
+		"flat map with returned empty optional": {
+			optional: Of("some string"),
+			arg: func(v string) Optional[string] {
+				return Empty[string]()
+			},
+			want:       Empty[string](),
+			wantCalled: true,
+		},
 	}
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
 			called := false
-			argWrapper := func(v string) Optional[string] {
+			fnWrapper := func(v string) Optional[string] {
 				called = true
 				return tt.arg(v)
 			}
 
-			got := tt.optional.FlatMap(argWrapper)
+			got := tt.optional.FlatMap(fnWrapper)
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("FlatMap() = %v, want %v", got, tt.want)
 			}
