@@ -5,6 +5,24 @@ import (
 	"testing"
 )
 
+func TestZeroInitialization(t *testing.T) {
+	tests := map[string]struct {
+		optional Optional[string]
+		want     Optional[string]
+	}{
+		"zero struct initialization is same as Empty": {
+			want: Empty[string](),
+		},
+	}
+	for name, tt := range tests {
+		t.Run(name, func(t *testing.T) {
+			if !reflect.DeepEqual(tt.optional, tt.want) {
+				t.Errorf("ZeroInitialization() = %v, want %v", tt.optional, tt.want)
+			}
+		})
+	}
+}
+
 func TestOf(t *testing.T) {
 	tests := map[string]struct {
 		value string
