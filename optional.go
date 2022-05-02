@@ -25,6 +25,14 @@ func (o Optional[T]) IfPresent(consumer func(value T)) {
 	}
 }
 
+func (o Optional[T]) IfPresentOrElse(consumer func(value T), runnable func()) {
+	if o.IsPresent() {
+		consumer(o.value)
+	} else {
+		runnable()
+	}
+}
+
 func (o Optional[T]) Else(v T) T {
 	if o.IsPresent() {
 		return o.value

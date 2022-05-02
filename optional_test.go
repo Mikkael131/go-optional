@@ -87,6 +87,41 @@ func TestOptional_IfPresent(t *testing.T) {
 	}
 }
 
+func TestOptional_IfPresentOrElse(t *testing.T) {
+	tests := map[string]struct {
+		optional           Optional[string]
+		wantCalledConsumer bool
+		wantCalledRunnable bool
+	}{
+		"consumer called with present optional": {
+			optional:           Of("some string"),
+			wantCalledConsumer: true,
+			wantCalledRunnable: false,
+		},
+		"runnable called with empty optional": {
+			optional:           Empty[string](),
+			wantCalledConsumer: false,
+			wantCalledRunnable: true,
+		},
+	}
+	for name, tt := range tests {
+		t.Run(name, func(t *testing.T) {
+			calledConsumer := false
+			calledRunnable := false
+			tt.optional.IfPresentOrElse(
+				func(v string) { calledConsumer = true },
+				func() { calledRunnable = true },
+			)
+			if calledConsumer != tt.wantCalledConsumer {
+				t.Errorf("IfPresentOrElse() consumer called = %v, want %v", calledConsumer, tt.wantCalledConsumer)
+			}
+			if calledRunnable != tt.wantCalledRunnable {
+				t.Errorf("IfPresentOrElse() runnable called = %v, want %v", calledRunnable, tt.wantCalledRunnable)
+			}
+		})
+	}
+}
+
 func TestOptional_Else(t *testing.T) {
 	tests := map[string]struct {
 		optional Optional[string]
